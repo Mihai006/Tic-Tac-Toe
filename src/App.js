@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Cell from "./components/cell";
 
@@ -6,6 +6,7 @@ function App() {
   const [cells, setCells] = useState(["", "", "", "", "", "", "", "", ""]);
   const [go, setGo] = useState("circle");
   const [winningMessage, setWinningMessage] = useState(null);
+  const [winningCombo, setWinningCombo] = useState([]);
 
   const message = "it is now " + go + "'s go";
 
@@ -22,9 +23,25 @@ function App() {
     ];
 
     winningCombos.forEach((array) => {
-      array.every((cell) => cells[cell]);
+      let circleWins = array.every((cell) => cells[cell] === "circle");
+      if (circleWins) {
+        setWinningMessage("CICLE WINS!!");
+        setWinningCombo(array);
+        return;
+      }
+    });
+    winningCombos.forEach((array) => {
+      let crossWins = array.every((cell) => cells[cell] === "cross");
+      if (crossWins) {
+        setWinningMessage("CROSS WINS!!");
+        setWinningCombo(array);
+        return;
+      }
     });
   };
+  useEffect(() => {
+    checkScore();
+  }, [cells]);
 
   return (
     <div className="app">
@@ -38,10 +55,11 @@ function App() {
             setGo={setGo}
             cells={cells}
             setCells={setCells}
+            winningMessage={winningMessage}
           />
         ))}
       </div>
-      <p></p>
+      <p>{winningMessage || message}</p>
     </div>
   );
 }

@@ -35,8 +35,8 @@
 }
 
 .cross {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 75px;
   position: relative;
   transform: rotate(45deg);
 }
@@ -45,7 +45,10 @@
 .cross:after {
   content: "";
   position: absolute;
-  background-color: red;
+  background-color: blueviolet;
+  border: black;
+  border-style: solid;
+  border-width: 4px;
 }
 
 .cross:before {
